@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HeatSafe design directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Inter+Tight:wght@400;500;600;700;800;900&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #e9e7e2; font-family: "Inter Tight", system-ui, sans-serif; color: #111; padding: 48px 0; }
+  .board { width: 1380px; margin: 0 auto 64px; padding: 48px 56px 56px; background: #f6f5f1; border-radius: 28px; }
+  .board.dark { background: #0d0f12; color: #e8e6e1; }
+  .board header { display: flex; align-items: baseline; gap: 18px; margin-bottom: 8px; }
+  .board header b { font: 800 15px/1 "IBM Plex Mono", monospace; letter-spacing: .12em; padding: 7px 10px; border-radius: 6px; background: #111; color: #fff; }
+  .board.dark header b { background: #f0ece4; color: #111; }
+  .board h1 { font: 800 34px/1.1 "Inter Tight"; letter-spacing: -.02em; }
+  .board p.why { font-size: 16px; line-height: 1.5; max-width: 900px; opacity: .72; margin-bottom: 36px; }
+  .phones { display: flex; gap: 48px; justify-content: center; }
+  .cap { text-align: center; font: 600 13px "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase; opacity: .55; margin-top: 16px; }
+  .phone { width: 390px; height: 844px; border-radius: 52px; padding: 12px; background: #1b1b1d; box-shadow: 0 30px 60px -20px rgba(0,0,0,.35), inset 0 0 0 2px #333; }
+  .screen { width: 100%; height: 100%; border-radius: 42px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+  .sb { display: flex; justify-content: space-between; align-items: center; padding: 16px 30px 6px; font: 600 15px "Inter Tight"; flex: none; }
+  .sb i { display: inline-flex; gap: 5px; font-style: normal; }
+  .sb i span { width: 17px; height: 11px; border-radius: 3px; border: 1.5px solid currentColor; opacity: .9; }
+  .island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 118px; height: 34px; background: #000; border-radius: 20px; z-index: 5; }
+
+  /* ================= A · SIGNAL (Japanese public-alert discipline) ================= */
+  .A { background: #fff; color: #0b0b0c; font-family: "Inter Tight"; }
+  .A .band { background: #c8102e; color: #fff; padding: 14px 22px 16px; }
+  .A .band .k { display: flex; align-items: center; gap: 10px; font: 700 12px "IBM Plex Mono"; letter-spacing: .14em; }
+  .A .band .k em { font-style: normal; background: #fff; color: #c8102e; padding: 3px 7px; border-radius: 3px; }
+  .A .band h2 { font: 800 26px/1.15 "Inter Tight"; margin-top: 8px; letter-spacing: -.01em; }
+  .A .band small { display: block; margin-top: 6px; font-size: 14px; opacity: .92; }
+  .A .body { padding: 18px 22px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+  .A .loc { display: flex; justify-content: space-between; font-size: 14px; color: #555; }
+  .A .loc b { color: #0b0b0c; font-size: 16px; }
+  .A .big { display: flex; align-items: flex-end; gap: 14px; }
+  .A .big .n { font: 900 108px/0.85 "Inter Tight"; letter-spacing: -.05em; }
+  .A .big .n sup { font-size: 40px; vertical-align: top; position: relative; top: 8px; }
+  .A .big .m { font-size: 14px; line-height: 1.45; color: #444; padding-bottom: 6px; }
+  .A .big .m b { color: #0b0b0c; }
+  .A .scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
+  .A .scale div { height: 34px; display: flex; align-items: center; justify-content: center; font: 700 12px "IBM Plex Mono"; color: #fff; position: relative; }
+  .A .scale div.on { outline: 3px solid #0b0b0c; outline-offset: 2px; z-index: 1; }
+  .A .scalelab { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; font-size: 10.5px; color: #666; text-align: center; margin-top: -10px; }
+  .A h3 { font: 700 11.5px "IBM Plex Mono"; letter-spacing: .14em; color: #666; text-transform: uppercase; }
+  .A .hours { display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; margin-top: 8px; }
+  .A .hours div { height: 30px; }
+  .A .ticks { display: flex; justify-content: space-between; font: 500 10.5px "IBM Plex Mono"; color: #777; margin-top: 4px; }
+  .A .todo { border-top: 2px solid #0b0b0c; }
+  .A .todo div { display: grid; grid-template-columns: 34px 1fr; gap: 10px; padding: 11px 0; border-bottom: 1px solid #e3e3e3; font-size: 15px; line-height: 1.35; }
+  .A .todo div span { font: 700 13px "IBM Plex Mono"; width: 28px; height: 28px; border-radius: 50%; background: #0b0b0c; color: #fff; display: flex; align-items: center; justify-content: center; }
+  .A .tabs { display: flex; justify-content: space-around; border-top: 1px solid #e3e3e3; padding: 10px 0 26px; font: 600 11px "Inter Tight"; color: #888; flex: none; }
+  .A .tabs div { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .A .tabs div.on { color: #c8102e; }
+  .A .tabs svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+  /* A alert */
+  .A2 { background: #0b0b0c; color: #fff; font-family: "Inter Tight"; }
+  .A2 .stripe { height: 14px; background: repeating-linear-gradient(-45deg, #6a1b9a 0 14px, #0b0b0c 14px 28px); }
+  .A2 .in { padding: 26px 24px; flex: 1; display: flex; flex-direction: column; gap: 18px; }
+  .A2 .k { font: 700 12px "IBM Plex Mono"; letter-spacing: .16em; color: #d6a3ff; display: flex; gap: 8px; align-items: center; }
+  .A2 .k i { width: 9px; height: 9px; border-radius: 50%; background: #b55cff; box-shadow: 0 0 0 5px rgba(181,92,255,.25); }
+  .A2 h2 { font: 900 42px/1.02 "Inter Tight"; letter-spacing: -.02em; }
+  .A2 .when { font-size: 17px; line-height: 1.45; color: #cfcfcf; }
+  .A2 .when b { color: #fff; }
+  .A2 .bar { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; }
+  .A2 .bar div { height: 54px; display: flex; align-items: flex-end; justify-content: center; font: 600 10px "IBM Plex Mono"; color: rgba(255,255,255,.8); padding-bottom: 4px; }
+  .A2 ol { list-style: none; display: flex; flex-direction: column; gap: 0; border-top: 1px solid #333; }
+  .A2 li { padding: 12px 0; border-bottom: 1px solid #262626; font-size: 15.5px; line-height: 1.35; display: flex; gap: 12px; }
+  .A2 li b { font: 700 13px "IBM Plex Mono"; color: #b55cff; min-width: 22px; }
+  .A2 .btns { margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-bottom: 12px; }
+  .A2 .btn { height: 58px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font: 700 17px "Inter Tight"; }
+  .A2 .btn.p { background: #fff; color: #0b0b0c; }
+  .A2 .btn.s { border: 1.5px solid #555; color: #fff; }
+  /* A water */
+  .A3 .body { gap: 18px; justify-content: flex-start; }
+  .A3 .ring { display: flex; align-items: center; gap: 20px; }
+  .A3 .cups { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; align-content: start; }
+  .A3 .cups div { height: 40px; border: 2px solid #0b0b0c; border-radius: 3px 3px 8px 8px; position: relative; overflow: hidden; }
+  .A3 .cups div.f::after { content: ""; position: absolute; inset: 30% 0 0; background: #1565c0; }
+  .A3 .count { font: 900 64px/.9 "Inter Tight"; letter-spacing: -.04em; }
+  .A3 .count small { font-size: 22px; color: #777; letter-spacing: 0; }
+  .A3 .next { background: #f2f2f2; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 15px; }
+  .A3 .next b { font: 700 26px "IBM Plex Mono"; }
+  .A3 .drink { height: 64px; background: #1565c0; color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px; font: 800 19px "Inter Tight"; border-radius: 10px; }
+  .A3 .tip { border-left: 4px solid #c8102e; padding: 4px 0 4px 14px; font-size: 15px; line-height: 1.45; }
+  .A3 .tip b { display: block; font: 700 11.5px "IBM Plex Mono"; letter-spacing: .12em; color: #c8102e; margin-bottom: 4px; }
+  .A3 .log div { display: flex; justify-content: space-between; font-size: 14px; padding: 9px 0; border-bottom: 1px solid #eee; }
+  .A3 .log span { font-family: "IBM Plex Mono"; color: #666; }
+
+  /* ================= B · THERMAL (dark, instrument-grade) ================= */
+  .B { background: radial-gradient(120% 70% at 50% 0%, #2a1208 0%, #0c0c0e 55%); color: #f3efe8; font-family: "Sora"; }
+  .B .in { padding: 8px 24px 0; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+  .B .top { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #a49d93; }
+  .B .top b { color: #f3efe8; font-weight: 600; font-size: 17px; display: block; }
+  .B .chip { font-size: 12px; padding: 7px 11px; border-radius: 99px; background: rgba(255,106,43,.14); color: #ff9a62; border: 1px solid rgba(255,106,43,.35); }
+  .B .dial { position: relative; height: 290px; display: flex; align-items: center; justify-content: center; }
+  .B .dial svg { position: absolute; inset: 0; margin: auto; }
+  .B .dial .c { text-align: center; position: relative; }
+  .B .dial .c .n { font: 300 92px/1 "Sora"; letter-spacing: -.04em; }
+  .B .dial .c .n sup { font-size: 34px; }
+  .B .dial .c .l { font: 600 15px "Sora"; color: #ff6a2b; letter-spacing: .02em; margin-top: 2px; }
+  .B .dial .c small { display: block; font-size: 12.5px; color: #8f887e; position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; top: 168px; }
+  .B .card { background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.07); border-radius: 20px; padding: 16px; }
+  .B .card h4 { font: 600 12px "Sora"; color: #8f887e; letter-spacing: .04em; display: flex; justify-content: space-between; }
+  .B .card h4 span { color: #f3efe8; }
+  .B .ribbon { margin-top: 12px; }
+  .B .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .B .mini .v { font: 400 26px "Sora"; margin-top: 8px; }
+  .B .mini .v small { font-size: 13px; color: #8f887e; }
+  .B .mini p { font-size: 12px; color: #a49d93; margin-top: 4px; line-height: 1.4; }
+  .B .nav { margin: auto 18px 22px; background: rgba(255,255,255,.07); border-radius: 26px; display: flex; justify-content: space-around; padding: 13px 0; font-size: 11px; color: #8f887e; }
+  .B .nav .on { color: #ff6a2b; }
+  /* B alert */
+  .B2 { background: #0c0c0e; color: #f3efe8; font-family: "Sora"; }
+  .B2 .glow { position: absolute; inset: -20% -40% auto; height: 70%; background: radial-gradient(closest-side, rgba(255,60,20,.55), transparent); filter: blur(10px); }
+  .B2 .in { position: relative; padding: 40px 26px 26px; flex: 1; display: flex; flex-direction: column; }
+  .B2 .k { font-size: 12.5px; letter-spacing: .18em; color: #ff8a5c; text-transform: uppercase; }
+  .B2 h2 { font: 300 46px/1.05 "Sora"; letter-spacing: -.03em; margin-top: 14px; }
+  .B2 h2 b { font-weight: 700; color: #ff6a2b; }
+  .B2 .p { margin-top: 16px; color: #b8b0a5; font-size: 15.5px; line-height: 1.55; }
+  .B2 .t { margin-top: 26px; display: flex; gap: 6px; align-items: flex-end; height: 120px; }
+  .B2 .t div { flex: 1; border-radius: 8px 8px 3px 3px; position: relative; }
+  .B2 .t div span { position: absolute; bottom: -20px; left: 0; right: 0; text-align: center; font-size: 10px; color: #8f887e; }
+  .B2 .btns { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+  .B2 .btn { height: 58px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font: 600 16px "Sora"; }
+  .B2 .btn.p { background: #ff6a2b; color: #140a05; }
+  .B2 .btn.s { background: rgba(255,255,255,.07); }
+  /* B water */
+  .B3 .drop { height: 300px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .B3 .drop .c { position: absolute; text-align: center; }
+  .B3 .drop .c .n { font: 300 72px/1 "Sora"; }
+  .B3 .drop .c small { color: #a49d93; font-size: 13px; }
+  .B3 .drinkb { height: 62px; border-radius: 20px; background: linear-gradient(90deg, #2f8bff, #46c2ff); color: #04121f; font: 700 17px "Sora"; display: flex; align-items: center; justify-content: center; }
+
+  /* ================= C · DAYLIGHT (sun-readable, for every age) ================= */
+  .C { background: #fbf6ec; color: #1d1a16; font-family: "Atkinson Hyperlegible"; }
+  .C .in { padding: 10px 22px 0; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .C .place { font-size: 16px; color: #6b6358; display: flex; justify-content: space-between; }
+  .C .place b { color: #1d1a16; }
+  .C h2 { font: 700 34px/1.08 "Fraunces"; letter-spacing: -.01em; }
+  .C h2 em { font-style: normal; background: #e5432d; color: #fff; padding: 0 8px; border-radius: 8px; }
+  .C .hero { background: #e5432d; color: #fff; border-radius: 26px; padding: 20px 22px; display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; align-items: center; }
+  .C .hero .n { font: 700 84px/.9 "Fraunces"; grid-row: span 2; }
+  .C .hero .l { font-size: 22px; font-weight: 700; }
+  .C .hero .s { font-size: 15px; opacity: .92; line-height: 1.35; }
+  .C .stay { background: #fff; border-radius: 22px; padding: 16px 18px; border: 2px solid #1d1a16; }
+  .C .stay b { display: block; font-size: 19px; }
+  .C .stay span { font-size: 15px; color: #6b6358; }
+  .C .day { display: flex; height: 16px; border-radius: 99px; overflow: hidden; margin-top: 12px; }
+  .C .dayt { display: flex; justify-content: space-between; font-size: 12px; color: #6b6358; margin-top: 5px; }
+  .C .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .C .tile { background: #fff; border-radius: 22px; padding: 14px 16px; font-size: 15px; line-height: 1.3; }
+  .C .tile b { display: block; font: 700 26px "Fraunces"; margin-bottom: 2px; }
+  .C .fam { background: #1d1a16; color: #fbf6ec; border-radius: 22px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .C .fam .av { width: 44px; height: 44px; border-radius: 50%; background: #f2b84b; color: #1d1a16; display: flex; align-items: center; justify-content: center; font: 700 18px "Fraunces"; flex: none; }
+  .C .fam div { flex: 1; font-size: 15px; line-height: 1.3; }
+  .C .fam div small { color: #b9b0a3; font-size: 13px; }
+  .C .fam .call { background: #f2b84b; color: #1d1a16; border-radius: 99px; padding: 10px 16px; font-weight: 700; }
+  .C .nav { display: flex; justify-content: space-around; padding: 12px 0 26px; font-size: 13px; color: #6b6358; margin-top: auto; flex: none; }
+  .C .nav .on { color: #1d1a16; font-weight: 700; }
+  /* C check-in */
+  .C2 { background: #f2b84b; color: #1d1a16; font-family: "Atkinson Hyperlegible"; }
+  .C2 .in { padding: 34px 26px 26px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+  .C2 .k { font-size: 15px; font-weight: 700; display: flex; gap: 8px; align-items: center; }
+  .C2 .k i { width: 12px; height: 12px; border-radius: 50%; background: #e5432d; }
+  .C2 h2 { font: 700 52px/1 "Fraunces"; }
+  .C2 p { font-size: 19px; line-height: 1.45; }
+  .C2 .ok { margin-top: auto; height: 120px; border-radius: 34px; background: #1d1a16; color: #fbf6ec; display: flex; align-items: center; justify-content: center; font: 700 30px "Fraunces"; }
+  .C2 .help { height: 64px; border-radius: 24px; border: 2.5px solid #1d1a16; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
+  .C2 .fine { font-size: 14px; text-align: center; color: #5a4a2c; }
+  /* C water */
+  .C3 .cupsC { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .C3 .cupsC svg { width: 100%; height: auto; }
+  .C3 .drinkc { height: 76px; border-radius: 28px; background: #1f6fd1; color: #fff; display: flex; align-items: center; justify-content: center; font: 700 22px "Fraunces"; }
+  .C3 .note { background: #fff; border-radius: 22px; padding: 16px 18px; font-size: 16px; line-height: 1.45; }
+  .C3 .note b { display: block; font-size: 18px; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ======================================== A ======================================== -->
+<section class="board" id="a">
+  <header><b>A</b><h1>Signal: public-alert clarity</h1></header>
+  <p class="why">Built like a Japanese government warning: a red band says the one thing that matters, a numbered 1–5 level scale (as in Japan's own heat and disaster alerts), hard grid, no decoration. Fastest to read at a glance; feels official and trustworthy.</p>
+  <div class="phones">
+    <div>
+      <div class="phone"><div class="screen A">
+        <div class="island"></div>
+        <div class="sb" style="background:#c8102e;color:#fff"><span>13:42</span><i><span></span></i></div>
+        <div class="band">
+          <div class="k"><em>LEVEL 4</em> HEAT DANGER</div>
+          <h2>Heat stroke risk is high until 16:00</h2>
+          <small>Stay out of the sun. Drink a cup of water every 20 minutes.</small>
+        </div>
+        <div class="body">
+          <div class="loc"><span><b>Kano</b> · Nigeria</span><span>Updated 13:30</span></div>
+          <div class="big">
+            <div class="n">44<sup>°</sup></div>
+            <div class="m">Feels like<br>Air <b>39°</b> · Humidity <b>38%</b><br>WBGT in sun <b>33.1°</b></div>
+          </div>
+          <div class="scale">
+            <div style="background:#2e7d32">1</div><div style="background:#f9a825">2</div><div style="background:#ef6c00">3</div><div class="on" style="background:#c8102e">4</div><div style="background:#6a1b9a">5</div>
+          </div>
+          <div class="scalelab"><span>Safe</span><span>Caution</span><span>Extreme<br>caution</span><span><b style="color:#0b0b0c">Danger</b></span><span>Extreme<br>danger</span></div>
+          <div>
+            <h3>Today, hour by hour</h3>
+            <div class="hours">
+              <div style="background:#2e7d32"></div><div style="background:#2e7d32"></div><div style="background:#2e7d32"></div><div style="background:#2e7d32"></div><div style="background:#2e7d32"></div><div style="background:#2e7d32"></div><div style="background:#2e7d32"></div><div style="background:#f9a825"></div><div style="background:#f9a825"></div><div style="background:#ef6c00"></div><div style="background:#ef6c00"></div><div style="background:#ef6c00"></div><div style="background:#c8102e"></div><div style="background:#c8102e;outline:2px solid #0b0b0c;outline-offset:1px"></div><div style="background:#c8102e"></div><div style="background:#c8102e"></div><div style="background:#ef6c00"></div><div style="background:#ef6c00"></div><div style="background:#f9a825"></div><div style="background:#f9a825"></div><div style="background:#f9a825"></div><div style="background:#2e7d32"></div><div style="background:#2e7d32"></div><div style="background:#2e7d32"></div>
+            </div>
+            <div class="ticks"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+          </div>
+          <div class="todo">
+            <div><span>1</span>Stay indoors or in shade from 12:00 to 16:00.</div>
+            <div><span>2</span>Wet your face, neck and wrists every hour.</div>
+            <div><span>3</span>Check on older neighbours today.</div>
+          </div>
+        </div>
+        <div class="tabs">
+          <div class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>Today</div>
+          <div><svg viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg>Water</div>
+          <div><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>Feel sick?</div>
+          <div><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="11" r="2.5"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M14 20c0-2 1.5-3.5 3-3.5s3 1.5 3 3.5"/></svg>Family</div>
+        </div>
+      </div></div>
+      <div class="cap">Today</div>
+    </div>
+
+    <div>
+      <div class="phone"><div class="screen A2">
+        <div class="island"></div>
+        <div class="sb"><span>11:58</span><i><span></span></i></div>
+        <div class="stripe"></div>
+        <div class="in">
+          <div class="k"><i></i>HEAT ALERT · LEVEL 5 IN 1 HOUR</div>
+          <h2>Extreme danger from 13:00 in Kano</h2>
+          <div class="when">Feels like <b>52°C</b> until about <b>17:00</b>. Heat stroke can happen even while resting.</div>
+          <div class="bar">
+            <div style="background:#ef6c00">11</div><div style="background:#c8102e">12</div><div style="background:#6a1b9a">13</div><div style="background:#6a1b9a">14</div><div style="background:#6a1b9a">15</div><div style="background:#6a1b9a">16</div><div style="background:#c8102e">17</div><div style="background:#ef6c00">18</div><div style="background:#ef6c00">19</div><div style="background:#f9a825">20</div><div style="background:#f9a825">21</div><div style="background:#2e7d32">22</div>
+          </div>
+          <ol>
+            <li><b>01</b>Get inside or into deep shade before 13:00.</li>
+            <li><b>02</b>Drink one cup every 15 minutes. Not more than 4 an hour.</li>
+            <li><b>03</b>Fans won't help in this heat. Wet your skin first.</li>
+          </ol>
+          <div class="btns">
+            <div class="btn p">I'm safe indoors</div>
+            <div class="btn s">Signs of heat stroke</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap">Full-screen alert</div>
+    </div>
+
+    <div>
+      <div class="phone"><div class="screen A A3">
+        <div class="island"></div>
+        <div class="sb"><span>14:05</span><i><span></span></i></div>
+        <div class="body" style="padding-top:22px">
+          <h3>Water today · Level 4</h3>
+          <div class="ring">
+            <div class="count">5<small> / 14 cups</small></div>
+          </div>
+          <div class="cups">
+            <div class="f"></div><div class="f"></div><div class="f"></div><div class="f"></div><div class="f"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+          </div>
+          <div class="next"><span>Next cup in</span><b>18:00</b></div>
+          <div class="drink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg>I drank a cup</div>
+          <div class="tip"><b>COOL DOWN NOW</b>Put a damp cloth on the back of your neck. Swap it when it gets warm.</div>
+          <div class="log">
+            <div>Cup of water<span>13:47</span></div>
+            <div>Cooled down<span>13:20</span></div>
+            <div>Cup of water<span>13:24</span></div>
+          </div>
+        </div>
+        <div class="tabs">
+          <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Today</div>
+          <div class="on"><svg viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg>Water</div>
+          <div><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>Feel sick?</div>
+          <div><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/></svg>Family</div>
+        </div>
+      </div></div>
+      <div class="cap">Water</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================== B ======================================== -->
+<section class="board dark" id="b">
+  <header><b>B</b><h1>Thermal: a precise instrument, after dark</h1></header>
+  <p class="why">Dark, premium and calm, like a high-end weather instrument. A heat dial and a 48-hour thermal ribbon show where you are and where it's going. Strongest "wow" for sharing and press; easiest on the eyes at night and on battery.</p>
+  <div class="phones">
+    <div>
+      <div class="phone"><div class="screen B">
+        <div class="island"></div>
+        <div class="sb"><span>13:42</span><i><span></span></i></div>
+        <div class="in">
+          <div class="top"><div><b>Kano</b>Nigeria · now</div><div class="chip">Severe heatwave · day 2 of 4</div></div>
+          <div class="dial">
+            <svg width="270" height="270" viewBox="0 0 270 270">
+              <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#3ddc97"/><stop offset=".35" stop-color="#ffd23f"/><stop offset=".6" stop-color="#ff6a2b"/><stop offset=".85" stop-color="#ff2e3b"/><stop offset="1" stop-color="#b13cff"/></linearGradient></defs>
+              <path d="M 40 205 A 110 110 0 1 1 230 205" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14" stroke-linecap="round"/>
+              <path d="M 40 205 A 110 110 0 1 1 230 205" fill="none" stroke="url(#g)" stroke-width="14" stroke-linecap="round" stroke-dasharray="520" stroke-dashoffset="0" opacity=".95"/>
+              <circle cx="213" cy="70" r="11" fill="#0c0c0e" stroke="#fff" stroke-width="4"/>
+            </svg>
+            <div class="c"><div class="n">44<sup>°</sup></div><div class="l">Danger</div><small>Air 39° · Humidity 38% · WBGT 33°</small></div>
+          </div>
+          <div class="card">
+            <h4>Next 48 hours <span>Peak 52° tomorrow 14:00</span></h4>
+            <svg class="ribbon" width="100%" height="70" viewBox="0 0 320 70" preserveAspectRatio="none">
+              <defs><linearGradient id="r" x1="0" x2="1"><stop offset="0" stop-color="#ff2e3b"/><stop offset=".15" stop-color="#ff6a2b"/><stop offset=".3" stop-color="#ffd23f"/><stop offset=".45" stop-color="#3ddc97"/><stop offset=".6" stop-color="#ff6a2b"/><stop offset=".72" stop-color="#b13cff"/><stop offset=".85" stop-color="#ff2e3b"/><stop offset="1" stop-color="#ffd23f"/></linearGradient></defs>
+              <path d="M0 18 C 30 12, 40 20, 60 32 S 110 62, 140 58 S 190 20, 220 6 S 270 30, 320 44 L 320 70 L 0 70 Z" fill="url(#r)" opacity=".28"/>
+              <path d="M0 18 C 30 12, 40 20, 60 32 S 110 62, 140 58 S 190 20, 220 6 S 270 30, 320 44" fill="none" stroke="url(#r)" stroke-width="3"/>
+              <line x1="4" y1="0" x2="4" y2="70" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 3"/>
+            </svg>
+            <div style="display:flex;justify-content:space-between;font-size:10.5px;color:#8f887e;margin-top:6px"><span>Now</span><span>Tonight</span><span>Tue 14:00</span><span>Wed</span></div>
+          </div>
+          <div class="row2">
+            <div class="card mini"><h4>Water</h4><div class="v">5<small> / 14 cups</small></div><p>Next cup in 18 min</p></div>
+            <div class="card mini"><h4>El Niño</h4><div class="v">+3.3<small>°C</small></div><p>Very strong. Hot spells are more likely.</p></div>
+          </div>
+        </div>
+        <div class="nav"><span class="on">Today</span><span>Water</span><span>Feel sick?</span><span>Family</span></div>
+      </div></div>
+      <div class="cap">Today</div>
+    </div>
+
+    <div>
+      <div class="phone"><div class="screen B2">
+        <div class="glow"></div>
+        <div class="island"></div>
+        <div class="sb" style="position:relative"><span>11:58</span><i><span></span></i></div>
+        <div class="in">
+          <div class="k">Heat alert · in 1 hour</div>
+          <h2>Kano reaches <b>extreme danger</b> at 13:00</h2>
+          <div class="p">Feels like 52°C until about 17:00. Get indoors or into deep shade now, and keep water close.</div>
+          <div class="t">
+            <div style="height:55%;background:#ff6a2b"><span>12</span></div><div style="height:100%;background:linear-gradient(#b13cff,#ff2e3b)"><span>13</span></div><div style="height:96%;background:linear-gradient(#b13cff,#ff2e3b)"><span>14</span></div><div style="height:90%;background:linear-gradient(#b13cff,#ff2e3b)"><span>15</span></div><div style="height:80%;background:#ff2e3b"><span>16</span></div><div style="height:62%;background:#ff6a2b"><span>17</span></div><div style="height:44%;background:#ffd23f"><span>18</span></div><div style="height:30%;background:#3ddc97"><span>19</span></div>
+          </div>
+          <div class="btns">
+            <div class="btn p">I'm safe indoors</div>
+            <div class="btn s">What to do</div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap">Full-screen alert</div>
+    </div>
+
+    <div>
+      <div class="phone"><div class="screen B B3">
+        <div class="island"></div>
+        <div class="sb"><span>14:05</span><i><span></span></i></div>
+        <div class="in">
+          <div class="top"><div><b>Water</b>Danger pace · every 20 min</div><div class="chip" style="background:rgba(70,194,255,.12);color:#7fd4ff;border-color:rgba(70,194,255,.35)">Next in 18:00</div></div>
+          <div class="drop">
+            <svg width="220" height="280" viewBox="0 0 220 280">
+              <defs><clipPath id="dc"><path d="M110 10 C 110 10, 200 120, 200 175 A 90 90 0 0 1 20 175 C 20 120, 110 10, 110 10 Z"/></clipPath>
+              <linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46c2ff"/><stop offset="1" stop-color="#1d5fff"/></linearGradient></defs>
+              <path d="M110 10 C 110 10, 200 120, 200 175 A 90 90 0 0 1 20 175 C 20 120, 110 10, 110 10 Z" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.14)" stroke-width="2"/>
+              <g clip-path="url(#dc)"><path d="M0 178 C 40 168, 80 190, 120 178 S 190 170, 220 180 L 220 280 L 0 280 Z" fill="url(#w)" opacity=".9"/></g>
+            </svg>
+            <div class="c" style="margin-top:-30px"><div class="n">5<span style="font-size:28px;color:#a49d93">/14</span></div><small>cups today</small></div>
+          </div>
+          <div class="drinkb">I drank a cup</div>
+          <div class="card" style="font-size:14px;line-height:1.5;color:#cfc7bb"><h4 style="margin-bottom:6px">Cool down</h4>Wet your face, neck and wrists. In dry heat like this, fans only help once your skin is wet.</div>
+        </div>
+        <div class="nav"><span>Today</span><span class="on" style="color:#46c2ff">Water</span><span>Feel sick?</span><span>Family</span></div>
+      </div></div>
+      <div class="cap">Water</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================== C ======================================== -->
+<section class="board" id="c">
+  <header><b>C</b><h1>Daylight: readable in the sun, by anyone</h1></header>
+  <p class="why">Warm, high-contrast and plain-spoken, built for the people most at risk: older people, outdoor workers, first-time smartphone users. Atkinson Hyperlegible type (made for low vision), whole sentences instead of jargon, huge buttons, and family check-ins up front.</p>
+  <div class="phones">
+    <div>
+      <div class="phone"><div class="screen C">
+        <div class="island"></div>
+        <div class="sb"><span>13:42</span><i><span></span></i></div>
+        <div class="in">
+          <div class="place"><span><b>Kano</b>, Nigeria</span><span>Monday</span></div>
+          <h2>It's <em>dangerously hot</em> today.</h2>
+          <div class="hero"><div class="n">44<span style="font-size:44px;vertical-align:top">°</span></div><div class="l">Danger</div><div class="s">Feels like 44°. The air is 39° and dry.</div></div>
+          <div class="stay"><b>Stay inside, noon to 4 pm</b><span>Go out before 10 am or after 6 pm.</span>
+            <div class="day"><div style="flex:7;background:#7cc47f"></div><div style="flex:2;background:#f2b84b"></div><div style="flex:3;background:#f08a3c"></div><div style="flex:4;background:#e5432d"></div><div style="flex:2;background:#f08a3c"></div><div style="flex:3;background:#f2b84b"></div><div style="flex:3;background:#7cc47f"></div></div>
+            <div class="dayt"><span>midnight</span><span>noon</span><span>midnight</span></div>
+          </div>
+          <div class="tiles">
+            <div class="tile"><b>5 of 14</b>cups of water today</div>
+            <div class="tile"><b>Day 2</b>of a 4-day heatwave</div>
+          </div>
+          <div class="fam"><div class="av">M</div><div>Mum in Kaduna<br><small>Danger today. Checked in 40 min ago.</small></div><span class="call">Call</span></div>
+        </div>
+        <div class="nav"><span class="on">Today</span><span>Water</span><span>Feel sick?</span><span>Family</span></div>
+      </div></div>
+      <div class="cap">Today</div>
+    </div>
+
+    <div>
+      <div class="phone"><div class="screen C2">
+        <div class="island"></div>
+        <div class="sb"><span>15:10</span><i><span></span></i></div>
+        <div class="in">
+          <div class="k"><i></i>Danger heat in Kano</div>
+          <h2>Are you OK, Amina?</h2>
+          <p>It's 45° and we haven't heard from you for 2 hours. Tap below so we know you're fine.</p>
+          <p style="font-size:16px">If you don't answer in 30 minutes, we'll text <b>Tunde</b> to check on you.</p>
+          <div class="ok">I'm OK</div>
+          <div class="help">I don't feel well</div>
+          <div class="fine">Nothing leaves your phone except that one text.</div>
+        </div>
+      </div></div>
+      <div class="cap">"Are you OK?" check-in</div>
+    </div>
+
+    <div>
+      <div class="phone"><div class="screen C C3">
+        <div class="island"></div>
+        <div class="sb"><span>14:05</span><i><span></span></i></div>
+        <div class="in">
+          <div class="place"><span><b>Water</b></span><span>Next cup in 18 min</span></div>
+          <h2>5 cups so far. Aim for 14 today.</h2>
+          <div class="cupsC">
+            <!-- 15 cups -->
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#1f6fd1" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#1f6fd1" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#1f6fd1" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#1f6fd1" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#1f6fd1" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#fff" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#fff" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#fff" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#fff" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#fff" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#fff" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#fff" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#fff" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 40 48"><path d="M6 6h28l-4 38H10z" fill="#fff" stroke="#1d1a16" stroke-width="2.5" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="drinkc">I drank a cup</div>
+          <div class="note"><b>Cool down too</b>Put a damp cloth on your neck. In dry heat, wet your skin before using a fan.</div>
+          <div class="note" style="background:transparent;border:2px dashed #c9bfae;font-size:14px">One cup is about 250 ml. Don't drink more than 4 cups an hour. If you sweat for hours, take ORS or a pinch of salt.</div>
+        </div>
+        <div class="nav"><span>Today</span><span class="on">Water</span><span>Feel sick?</span><span>Family</span></div>
+      </div></div>
+      <div class="cap">Water</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
