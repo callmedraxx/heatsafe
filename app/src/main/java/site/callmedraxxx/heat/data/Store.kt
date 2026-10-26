@@ -88,6 +88,11 @@ class Store(ctx: Context) {
         get() = p.getBoolean("reminders", true)
         set(v) = p.edit().putBoolean("reminders", v).apply()
 
+    /** Reminders are also said out loud. */
+    var speakOn: Boolean
+        get() = p.getBoolean("speak", true)
+        set(v) = p.edit().putBoolean("speak", v).apply()
+
     /** Reminders paused for this local date only. */
     var pausedOn: String?
         get() = p.getString("paused", null)

@@ -138,6 +138,8 @@
     <string name="p_medicine">Heart, kidney, BP or diabetes problems, or mental-health medicine</string>
     <string name="p_fluid">A doctor limits how much I drink</string>
     <string name="reminders">Reminders</string>
+    <string name="speak_reminders">Say them out loud</string>
+    <string name="say_water">Time to drink water.</string>
     <string name="wake_time">Wake up</string>
     <string name="sleep_time">Go to sleep</string>
     <string name="change_place">Change place</string>

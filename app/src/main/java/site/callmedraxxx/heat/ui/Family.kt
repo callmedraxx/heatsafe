@@ -49,6 +49,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import site.callmedraxxx.heat.BuildConfig
 import site.callmedraxxx.heat.R
+import site.callmedraxxx.heat.remind.Speak
+import kotlin.concurrent.thread
 import site.callmedraxxx.heat.data.FamilyPlace
 import site.callmedraxxx.heat.heat.HeatMath
 import kotlin.math.roundToInt
@@ -184,6 +186,10 @@ fun Settings(app: AppState, onClose: () -> Unit) {
 
         Panel {
             Toggle(stringResource(R.string.reminders), s.remindersOn) { s.remindersOn = it; app.touched() }
+            Toggle(stringResource(R.string.speak_reminders), s.speakOn) {
+                s.speakOn = it; app.touched()
+                if (it) thread { Speak.say(ctx, Speak.WATER) }
+            }
             Stepper(stringResource(R.string.wake_time), s.wakeMinute) { s.wakeMinute = it; app.touched() }
             Stepper(stringResource(R.string.sleep_time), s.sleepMinute) { s.sleepMinute = it; app.touched() }
         }

@@ -123,6 +123,11 @@ object Engine {
                     else -> null
                 }
                 Notify.reminder(ctx, s, level, minutesSince(s.lastDrink(), now), tip, note)
+                if (s.speakOn) Speak.say(ctx, when {
+                    s.profile.fluidLimit -> Speak.FLUID_LIMIT
+                    note != null -> Speak.TARGET_MET
+                    else -> Speak.WATER
+                }, Speak.tip(tip))
             }
             // On a Danger day, a long silence gets an "Are you OK?".
             if (s.checkinOn && level >= Level.DANGER && now - s.lastAnything() >= SILENCE_BEFORE_CHECKIN &&
