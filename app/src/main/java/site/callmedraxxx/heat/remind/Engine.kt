@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.SystemClock
 import android.telephony.SmsManager
 import site.callmedraxxx.heat.R
+import site.callmedraxxx.heat.ui.tipText
 import site.callmedraxxx.heat.data.FamilyPlace
 import site.callmedraxxx.heat.data.Forecast
 import site.callmedraxxx.heat.data.Store
@@ -123,6 +124,7 @@ object Engine {
                     else -> null
                 }
                 Notify.reminder(ctx, s, level, minutesSince(s.lastDrink(), now), tip, note)
+                if (s.speakOn) Speak.say(ctx, (if (note == null) ctx.getString(R.string.say_water) + " " else "") + tipText(ctx, tip))
             }
             // On a Danger day, a long silence gets an "Are you OK?".
             if (s.checkinOn && level >= Level.DANGER && now - s.lastAnything() >= SILENCE_BEFORE_CHECKIN &&
