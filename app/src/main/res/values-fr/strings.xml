@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HeatSafe</string>
+
+    <!-- Niveaux : indice de chaleur du National Weather Service (États-Unis) -->
+    <string name="lvl_safe">Sans danger</string>
+    <string name="lvl_caution">Prudence</string>
+    <string name="lvl_extreme_caution">Grande prudence</string>
+    <string name="lvl_danger">Danger</string>
+    <string name="lvl_extreme_danger">Danger extrême</string>
+
+    <!-- Onglets -->
+    <string name="tab_today">Aujourd\'hui</string>
+    <string name="tab_water">Eau</string>
+    <string name="tab_sick">Malade ?</string>
+    <string name="tab_family">Famille</string>
+
+    <!-- Accueil -->
+    <string name="welcome_title">Votre risque chaleur, heure par heure.</string>
+    <string name="welcome_body">Le risque chaleur là où vous êtes, des rappels pour boire, et un contrôle les pires jours. Gratuit, sans compte.</string>
+    <string name="use_location">Utiliser ma position</string>
+    <string name="or_search">Ou chercher une ville</string>
+    <string name="search_hint">Ville ou village</string>
+    <string name="locating">Localisation…</string>
+    <string name="no_location">Position introuvable. Cherchez plutôt votre ville.</string>
+    <string name="search_none">Aucun lieu trouvé.</string>
+    <string name="loading">Chaleur à %1$s en cours de chargement…</string>
+    <string name="load_failed">Service météo injoignable. Vérifiez votre connexion et réessayez.</string>
+    <string name="retry">Réessayer</string>
+    <string name="your_location">Votre position</string>
+
+    <!-- Aujourd'hui -->
+    <string name="today_word">aujourd\'hui</string>
+    <string name="tomorrow_word">demain</string>
+    <string name="cups_of">%1$d sur %2$d</string>
+    <string name="next_cup_in">Prochain verre dans %1$d min</string>
+    <string name="next_cup_now">C\'est l\'heure de boire</string>
+    <string name="no_reminders_now">Pas de rappel pour le moment</string>
+    <string name="what_to_do">À faire maintenant</string>
+    <string name="updated">Mis à jour %1$s</string>
+    <string name="stale">Météo vieille de %1$d heures. Touchez pour actualiser.</string>
+
+    <!-- Conseils par niveau -->
+    <string name="adv_safe_1">La chaleur n\'est pas un risque en ce moment.</string>
+    <string name="adv_safe_2">Buvez quand vous avez soif.</string>
+    <string name="adv_caution_1">Un verre d\'eau toutes les 45 minutes, avant d\'avoir soif.</string>
+    <string name="adv_caution_2">Reposez-vous à l\'ombre. Portez des vêtements amples et clairs.</string>
+    <string name="adv_ec_1">Un verre toutes les 30 minutes. Restez à l\'ombre à midi.</string>
+    <string name="adv_ec_2">Mouillez-vous le visage, le cou et les poignets chaque heure.</string>
+    <string name="adv_ec_3">Prenez des nouvelles des voisins âgés et des personnes seules.</string>
+    <string name="adv_danger_1">Restez à l\'intérieur ou à l\'ombre épaisse aux heures les plus chaudes.</string>
+    <string name="adv_danger_2">Un verre toutes les 20 minutes. Pas plus de 4 par heure.</string>
+    <string name="adv_danger_3">Ne laissez jamais un enfant ou un animal dans une voiture ou une pièce fermée.</string>
+    <string name="adv_xd_1">Arrêtez tout travail dur dehors. Le coup de chaleur frappe même au repos.</string>
+    <string name="adv_xd_2">Un verre toutes les 15 minutes. Mouillez la peau, puis mettez-vous devant un ventilateur.</string>
+    <string name="adv_xd_3">Appelez ou visitez toute personne âgée, malade ou seule, matin et soir.</string>
+    <string name="adv_workrest">Chaque heure : %1$d min de travail, %2$d min de repos à l\'ombre.</string>
+    <string name="adv_dry_fans">Trop chaud et sec pour un ventilateur seul. Mouillez d\'abord la peau.</string>
+    <string name="adv_powercut">Coupure de courant ? Suspendez un linge mouillé à la fenêtre et reposez-vous dans la pièce la plus fraîche.</string>
+
+    <!-- Eau -->
+    <string name="water_pace">Un verre toutes les %1$d min</string>
+    <string name="water_pace_none">Pas de rappel à cette chaleur</string>
+    <string name="water_paused">En pause pour aujourd\'hui</string>
+    <string name="drank_cup">J\'ai bu un verre</string>
+    <string name="cooled_down">Je me suis rafraîchi</string>
+    <string name="cool_down">Se rafraîchir</string>
+    <string name="cup_note">1 verre = 250 ml. Maximum 4 par heure.</string>
+    <string name="fluid_note">Votre médecin limite vos boissons. HeatSafe vous rappelle seulement de vous rafraîchir.</string>
+    <string name="activity_home">À la maison</string>
+    <string name="activity_out">En déplacement</string>
+    <string name="activity_work">Travail dehors</string>
+    <string name="pause_today">Pause pour aujourd\'hui</string>
+    <string name="resume">Réactiver</string>
+
+    <!-- Conseils pour se rafraîchir -->
+    <string name="tip_shade">Mettez-vous à l\'ombre, ou à l\'intérieur, un moment.</string>
+    <string name="tip_wet_face">Mouillez-vous le visage, le cou et les poignets avec de l\'eau fraîche.</string>
+    <string name="tip_damp_cloth">Posez un linge humide sur la nuque. Changez-le quand il devient chaud.</string>
+    <string name="tip_cool_wash">Prenez une douche fraîche ou lavez-vous au seau, ou trempez vos pieds.</string>
+    <string name="tip_wet_skin">Il fait très chaud et sec : le ventilateur ne sert à rien sur une peau sèche. Mouillez d\'abord la peau, puis asseyez-vous devant le ventilateur.</string>
+
+    <!-- Malade -->
+    <string name="sick_title">Vous ne vous sentez pas bien ?</string>
+    <string name="sick_intro">Cochez ce que vous voyez maintenant.</string>
+    <string name="sick_emergency_group">Urgence</string>
+    <string name="s_confused">Confus, titube ou parle bizarrement</string>
+    <string name="s_faint">Évanoui, a convulsé, ou difficile à réveiller</string>
+    <string name="s_hot_dry">Peau très chaude, ne transpire plus</string>
+    <string name="s_vomit_cant_drink">Vomit sans arrêt, ne garde pas l\'eau</string>
+    <string name="sick_exhaustion_group">Épuisement par la chaleur</string>
+    <string name="s_sweat">Forte transpiration, peau froide et moite</string>
+    <string name="s_dizzy">Vertiges, faiblesse ou grande fatigue</string>
+    <string name="s_headache">Mal de tête ou nausées</string>
+    <string name="s_cramps">Crampes musculaires</string>
+    <string name="s_pulse">Pouls rapide et faible</string>
+    <string name="sick_stroke_title">Coup de chaleur possible. Demandez de l\'aide maintenant.</string>
+    <string name="sick_stroke_1">Appelez le %1$s, ou emmenez la personne vite dans un centre de santé.</string>
+    <string name="sick_stroke_2">Mettez-la à l\'ombre, versez de l\'eau fraîche sur elle et éventez-la.</string>
+    <string name="sick_stroke_3">Linges froids et mouillés sur le cou, les aisselles et l\'aine.</string>
+    <string name="sick_stroke_4">Ne donnez rien à boire sauf si elle est bien réveillée. Ne la laissez pas seule.</string>
+    <string name="sick_exh_title">Cela ressemble à un épuisement par la chaleur.</string>
+    <string name="sick_exh_1">Allongez-vous au frais, jambes surélevées.</string>
+    <string name="sick_exh_2">Buvez de l\'eau ou du SRO à petites gorgées.</string>
+    <string name="sick_exh_3">Mouillez la peau, éventez, desserrez les vêtements.</string>
+    <string name="sick_exh_4">Pas mieux dans une heure ? Consultez.</string>
+    <string name="sick_none">Si quelqu\'un semble très mal, n\'attendez pas. Appelez à l\'aide.</string>
+    <string name="call_number">Appeler le %1$s</string>
+    <string name="sick_disclaimer">Premiers secours, pas un diagnostic.</string>
+
+    <!-- Famille / contrôles -->
+    <string name="family_title">Famille</string>
+    <string name="checkin_title">Contrôles « Ça va ? »</string>
+    <string name="checkin_body">Les jours de danger, si vous restez silencieux 2 heures, HeatSafe vous demande si ça va. Sans réponse en 30 minutes, il envoie un SMS à votre contact.</string>
+    <string name="checkin_on">Activer les contrôles</string>
+    <string name="your_name">Votre nom</string>
+    <string name="contact_name">Nom du contact</string>
+    <string name="contact_phone">Numéro du contact</string>
+    <string name="sms_permission">Autoriser HeatSafe à envoyer ce SMS</string>
+    <string name="sms_granted">SMS autorisés</string>
+    <string name="places_title">Vos proches</string>
+    <string name="places_body">Un rappel leurs jours dangereux, matin et soir.</string>
+    <string name="add_place">Ajouter un lieu</string>
+    <string name="label_hint">Qui habite là ?</string>
+    <string name="remove">Retirer</string>
+    <string name="place_today">%1$s aujourd\'hui, jusqu\'à %2$d°</string>
+    <string name="place_unknown">Vérification…</string>
+    <string name="save">Enregistrer</string>
+    <string name="cancel">Annuler</string>
+
+    <!-- Réglages -->
+    <string name="settings">Réglages</string>
+    <string name="about_you">À propos de vous</string>
+    <string name="about_you_body">Ceci relève votre niveau de risque plus tôt.</string>
+    <string name="p_older">65 ans ou plus, ou jeune enfant</string>
+    <string name="p_pregnant">Enceinte</string>
+    <string name="p_outdoor">Je travaille dehors</string>
+    <string name="p_medicine">Problèmes de cœur, de reins, de tension ou de diabète, ou médicaments psychiatriques</string>
+    <string name="p_fluid">Un médecin limite ce que je bois</string>
+    <string name="reminders">Rappels</string>
+    <string name="speak_reminders">Les dire à voix haute</string>
+    <string name="say_water">C\'est l\'heure de boire de l\'eau.</string>
+    <string name="wake_time">Réveil</string>
+    <string name="sleep_time">Coucher</string>
+    <string name="change_place">Changer de lieu</string>
+    <string name="notifications_off">Les notifications sont désactivées. Les rappels ne peuvent pas vous atteindre.</string>
+    <string name="turn_on">Activer</string>
+    <string name="about">Gratuit et open source. Météo et prévisions : Open-Meteo. El Niño : NOAA. Indice de chaleur : US National Weather Service. Vagues de chaleur : Excess Heat Factor (Bureau de météorologie australien).</string>
+    <string name="source_code">Code source</string>
+    <string name="version">Version %1$s</string>
+
+    <!-- Écran d'alerte -->
+    <string name="alert_kicker">Alerte chaleur dans 1 heure</string>
+    <string name="alert_title">%1$s atteint « %2$s » à %3$02d:00</string>
+    <string name="alert_body">Ressenti %1$d°C jusqu\'à environ %2$02d:00. Rentrez ou mettez-vous à l\'ombre épaisse, gardez de l\'eau près de vous.</string>
+    <string name="alert_safe">Je suis à l\'abri</string>
+    <string name="alert_what">Que faire</string>
+
+    <!-- Notifications -->
+    <string name="ch_water">Rappels pour boire et se rafraîchir</string>
+    <string name="ch_alerts">Alertes chaleur</string>
+    <string name="ch_checkin">Contrôles « Ça va ? »</string>
+    <string name="n_water_title">C\'est l\'heure de boire. Dernier verre il y a %1$d min.</string>
+    <string name="n_water_title_first">C\'est l\'heure de boire un verre d\'eau.</string>
+    <string name="n_cool_title">C\'est l\'heure de se rafraîchir.</string>
+    <string name="n_target_met">Vous avez bu l\'eau du jour. Continuez à vous rafraîchir.</string>
+    <string name="n_fluid_limit">Respectez la limite de boisson de votre médecin.</string>
+    <string name="n_morning_title">%1$s : chaleur à %2$s aujourd\'hui, ressenti jusqu\'à %3$d°</string>
+    <string name="n_morning_hours">Le pire de %1$02d:00 à %2$02d:00. Faites vos courses aux heures fraîches.</string>
+    <string name="n_morning_plain">Gardez de l\'eau près de vous et reposez-vous à l\'ombre l\'après-midi.</string>
+    <string name="n_alert_title">%1$s atteint « %2$s » à %3$02d:00</string>
+    <string name="n_alert_body">Ressenti %1$d° jusqu\'à environ %2$02d:00. Rentrez ou mettez-vous à l\'ombre épaisse.</string>
+    <string name="n_checkin_title">Ça va ?</string>
+    <string name="n_checkin_title_named">Ça va, %1$s ?</string>
+    <string name="n_checkin_body">Ressenti %1$d° et aucune nouvelle de vous depuis 2 heures. Touchez « Ça va ». Sinon, nous envoyons un SMS à %2$s dans 30 minutes.</string>
+    <string name="n_texted">Nous avons envoyé un SMS à %1$s pour prendre de vos nouvelles.</string>
+    <string name="n_text_failed">SMS à %1$s impossible. Appelez quelqu\'un si vous vous sentez mal.</string>
+    <string name="n_family_title">Prenez des nouvelles de %1$s aujourd\'hui</string>
+    <string name="n_family_body">Chaleur dangereuse à %1$s aujourd\'hui, jusqu\'à %2$d°.</string>
+    <string name="a_drank">Bu</string>
+    <string name="a_cooled">Rafraîchi</string>
+    <string name="a_snooze">10 min</string>
+    <string name="a_ok">Ça va</string>
+    <string name="your_contact">votre contact</string>
+    <string name="sms_someone">Votre proche</string>
+    <string name="sms_text">HeatSafe : %1$s n\'a pas donné signe de vie depuis %2$s heures et le ressenti est de %3$d°C à %4$s. Appelez-le maintenant, s\'il vous plaît.</string>
+
+    <!-- Carte El Niño -->
+    <string name="en_title">El Niño</string>
+    <string name="en_loading">Lecture de la semaine en cours…</string>
+    <string name="en_lanina">La Niña</string>
+    <string name="en_neutral">Neutre</string>
+    <string name="en_weak">Faible</string>
+    <string name="en_moderate">Modéré</string>
+    <string name="en_strong">Fort</string>
+    <string name="en_very_strong">Très fort</string>
+    <string name="en_means_hot">Les longues périodes de chaleur sont plus probables.</string>
+    <string name="en_means_cool">Les tendances changent, surveillez vos prévisions.</string>
+    <string name="en_means_neutral">Ne pousse la chaleur ni dans un sens ni dans l\'autre.</string>
+    <string name="adv_outside">Couvrez-vous la tête. Portez des couleurs claires, pas de noir. Emportez votre eau.</string>
+    <string name="adv_medicine">Sous traitement pour la tension ou diurétiques ? Ne l\'arrêtez pas seul. Demandez à votre médecin ou pharmacien.</string>
+    <string name="tonight_hot">Cette nuit reste à %1$d°. Gardez de l\'eau près du lit.</string>
+    <string name="share">Partager HeatSafe</string>
+    <string name="share_text">HeatSafe vous prévient avant une chaleur dangereuse et vous rappelle de boire. Gratuit : %1$s</string>
+    <string name="follow_me">Suivre ma position</string>
+    <string name="following">Votre position</string>
+    <string name="n_evening_title">Nuit chaude : encore %1$d° à 2 h</string>
+    <string name="n_evening_body">Gardez de l\'eau près du lit. Mouillez un linge pour la nuque. Prenez des nouvelles des personnes âgées ou seules.</string>
+    <string name="n_family_night">Prenez des nouvelles de %1$s ce soir</string>
+    <string name="n_family_night_body">Journée dangereuse à %1$s. Appelez avant de dormir.</string>
+    <string name="en_today">Aujourd\'hui %1$s°</string>
+    <string name="en_vs_normal">vs normale</string>
+    <string name="earlier">Plus tôt</string>
+    <string name="later">Plus tard</string>
+    <string name="cups_label">verres d\'eau aujourd\'hui</string>
+    <string name="headline">Il fait %1$s aujourd\'hui.</string>
+    <string name="h_safe">bon</string>
+    <string name="h_caution">chaud</string>
+    <string name="h_ec">très chaud</string>
+    <string name="h_danger">dangereusement chaud</string>
+    <string name="h_xd">une chaleur extrême</string>
+    <string name="air_dry">Ressenti %1$d°. L\'air est à %2$d° et sec.</string>
+    <string name="air_humid">Ressenti %1$d°. L\'air est à %2$d° et humide.</string>
+    <string name="air_plain">Ressenti %1$d°. L\'air est à %2$d°.</string>
+    <string name="plan_stay">Restez à l\'intérieur, de %1$s à %2$s</string>
+    <string name="plan_go">Sortez avant %1$s ou après %2$s.</string>
+    <string name="plan_shade">Restez à l\'ombre, de %1$s à %2$s</string>
+    <string name="plan_over">Le pire de la chaleur est passé pour aujourd\'hui</string>
+    <string name="plan_fine">Pas de chaleur dangereuse aujourd\'hui</string>
+    <string name="midnight">minuit</string>
+    <string name="noon">midi</string>
+    <string name="am">%1$d h</string>
+    <string name="pm">%1$d h</string>
+    <string name="hw_day">Jour %1$d</string>
+    <string name="hw_of">d\'une vague de chaleur de %1$d jours</string>
+    <string name="hw_coming_tile">une vague de chaleur commence</string>
+    <string name="peak_tile">pic %1$s %2$s</string>
+    <string name="who_in">%1$s à %2$s</string>
+    <string name="water_done">%1$d verres. L\'eau du jour est bue.</string>
+    <plurals name="water_headline"><item quantity="one">%1$d verre pour l\'instant. Objectif %2$d aujourd\'hui.</item><item quantity="other">%1$d verres pour l\'instant. Objectif %2$d aujourd\'hui.</item></plurals>
+    <string name="look">Style</string>
+    <string name="look_daylight">Lumière du jour</string>
+    <string name="look_thermal">Thermique</string>
+    <string name="look_signal">Signal</string>
+</resources>

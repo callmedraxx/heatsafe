@@ -177,7 +177,8 @@ private fun PlanCard(app: AppState, f: Forecast, hr: Boolean) {
 private fun clock(ctx: android.content.Context, hour: Int): String = when (val h = Math.floorMod(hour, 24)) {
     0 -> ctx.getString(R.string.midnight)
     12 -> ctx.getString(R.string.noon)
-    else -> if (android.text.format.DateFormat.is24HourFormat(ctx)) "%02d:00".format(h)
+    // "2 pm" only where English is spoken and the phone is on 12-hour time; everywhere else 14:00.
+    else -> if (android.text.format.DateFormat.is24HourFormat(ctx) || ctx.resources.configuration.locales[0].language != "en") "%02d:00".format(h)
         else ctx.getString(if (h < 12) R.string.am else R.string.pm, if (h > 12) h - 12 else h)
 }
 
